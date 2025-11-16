@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Market Noise / Void Avatar Lounge</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="crt">
+
+  <div class="page-shell">
+    <header class="window window-top">
+      <div class="window-titlebar">
+        <span class="title-dot">●</span>
+        <span>MARKET NOISE</span>
+        <span class="title-right">user to user trades</span>
+      </div>
+      <div class="window-body window-body-split">
+        <div class="panel panel-left">
+          <h1 class="section-title">live listings</h1>
+          <div class="nav-links">
+            <a href="index.html">[ gateway ]</a>
+            <a href="avatar.html">[ avatar room ]</a>
+            <a href="inventory.html">[ inventory ]</a>
+          </div>
+          <div class="status-box">
+            <div class="status-line">USER: <span id="user-email"></span></div>
+            <div class="status-line">COINS: <span id="user-coins"></span></div>
+          </div>
+        </div>
+
+        <div class="panel panel-right">
+          <div class="sub-window">
+            <div class="sub-window-titlebar">active market</div>
+            <div class="sub-window-body">
+              <div id="listing-list" class="listing-list">
+                <!-- listings injected here -->
+              </div>
+              <div id="listing-empty" class="hint-text" style="display:none;">
+                No listings yet. List an item below to seed the market.
+              </div>
+            </div>
+          </div>
+
+          <div class="sub-window">
+            <div class="sub-window-titlebar">list an item</div>
+            <div class="sub-window-body">
+              <form id="list-form">
+                <label>
+                  item id
+                  <input id="list-item-id" placeholder="hair_001" required>
+                </label>
+                <label>
+                  price (coins)
+                  <input id="list-price" type="number" min="1" value="100" required>
+                </label>
+                <button type="submit" class="btn">list from inventory</button>
+                <div class="hint-text">
+                  For starter use your known item ids from the items collection.
+                  In a real build you would pick from owned items only.
+                </div>
+                <div id="list-error" class="error-text"></div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <footer class="footer-bar">
+      <span>market data lives in collection listings.</span>
+      <span>this version has no tax. you can add that in a cloud function.</span>
+    </footer>
+  </div>
+
+  <script type="module" src="js/market.js"></script>
+</body>
+</html>
