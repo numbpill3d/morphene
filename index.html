@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>VOID AVATAR LOUNGE</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="crt">
+
+  <div class="page-shell">
+    <header class="window window-top">
+      <div class="window-titlebar">
+        <span class="title-dot">●</span>
+        <span>VOID AVATAR LOUNGE / GATEWAY</span>
+        <span class="title-right">v0.1</span>
+      </div>
+      <div class="window-body window-body-split">
+        <div class="panel panel-left">
+          <h1 class="main-logo">VOID AVATAR LOUNGE</h1>
+          <p class="tagline">
+            Hand rolled paper doll engine. Black and red dream terminal.
+            Stack your layers. Haunt the grid.
+          </p>
+
+          <ul class="nav-links">
+            <li><a href="avatar.html">[ Avatar Room ]</a></li>
+            <li><a href="inventory.html">[ Inventory Vault ]</a></li>
+            <li><a href="market.html">[ Market Noise ]</a></li>
+          </ul>
+
+          <div class="status-box">
+            <div class="status-line">AUTH STATUS: <span id="auth-status">checking...</span></div>
+            <div class="status-line">CURRENT USER: <span id="auth-user">none</span></div>
+            <button id="btn-logout" class="btn" disabled>logout</button>
+          </div>
+        </div>
+
+        <div class="panel panel-right">
+          <div class="sub-window">
+            <div class="sub-window-titlebar">sign in</div>
+            <div class="sub-window-body">
+              <form id="login-form">
+                <label>
+                  email
+                  <input type="email" id="login-email" required>
+                </label>
+                <label>
+                  password
+                  <input type="password" id="login-password" required>
+                </label>
+                <button type="submit" class="btn">enter terminal</button>
+                <div id="login-error" class="error-text"></div>
+              </form>
+            </div>
+          </div>
+
+          <div class="sub-window">
+            <div class="sub-window-titlebar">register</div>
+            <div class="sub-window-body">
+              <form id="register-form">
+                <label>
+                  email
+                  <input type="email" id="register-email" required>
+                </label>
+                <label>
+                  password
+                  <input type="password" id="register-password" required>
+                </label>
+                <button type="submit" class="btn btn-ghost">spawn new account</button>
+                <div class="hint-text">
+                  First time users start with 1000 coins as a test signal.
+                </div>
+                <div id="register-error" class="error-text"></div>
+              </form>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </header>
+
+    <footer class="footer-bar">
+      <span>VOID AVATAR LOUNGE v0.1</span>
+      <span>static png stacker. firebase brainstem.</span>
+      <span>use at own risk.</span>
+    </footer>
+  </div>
+
+  <script type="module" src="js/auth.js"></script>
+</body>
+</html>
