@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Avatar Room / Void Avatar Lounge</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="crt">
+
+  <div class="page-shell">
+    <header class="window window-top">
+      <div class="window-titlebar">
+        <span class="title-dot">●</span>
+        <span>AVATAR ROOM</span>
+        <span class="title-right">layer stack engine</span>
+      </div>
+      <div class="window-body window-body-split">
+        <div class="panel panel-left">
+          <h1 class="section-title">current shell</h1>
+          <div id="avatar-stage" class="avatar-stage">
+            <!-- stacked png layers will render here -->
+          </div>
+          <div class="status-box">
+            <div class="status-line">USER: <span id="user-email"></span></div>
+            <div class="status-line">COINS: <span id="user-coins"></span></div>
+          </div>
+          <div class="nav-links">
+            <a href="index.html">[ gateway ]</a>
+            <a href="inventory.html">[ inventory ]</a>
+            <a href="market.html">[ market ]</a>
+          </div>
+        </div>
+
+        <div class="panel panel-right">
+          <div class="sub-window">
+            <div class="sub-window-titlebar">equipped slots</div>
+            <div class="sub-window-body">
+              <div id="equipped-slots" class="equipped-list"></div>
+              <div class="hint-text">
+                To change what you wear, visit Inventory Vault and equip items.
+              </div>
+            </div>
+          </div>
+
+          <div class="sub-window">
+            <div class="sub-window-titlebar">debug / layer readout</div>
+            <div class="sub-window-body">
+              <pre id="layer-debug" class="debug-console"></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <footer class="footer-bar">
+      <span>all visuals are stacked png layers.</span>
+      <span>no game engine. only html, css, javascript.</span>
+    </footer>
+  </div>
+
+  <script type="module" src="js/avatar.js"></script>
+</body>
+</html>
