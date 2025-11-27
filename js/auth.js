@@ -14,6 +14,16 @@ import {
   setDoc
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
+const defaultProfile = (email) => ({
+  displayName: email || "new user",
+  pronouns: "",
+  status: "haunting the grid",
+  tagline: "retro layer stacker",
+  bio: "",
+  theme: "crt",
+  accent: "red"
+});
+
 const loginForm = document.getElementById("login-form");
 const loginEmail = document.getElementById("login-email");
 const loginPassword = document.getElementById("login-password");
@@ -64,7 +74,8 @@ if (registerForm) {
       await setDoc(userRef, {
         email: cred.user.email,
         coins: 1000,
-        createdAt: Date.now()
+        createdAt: Date.now(),
+        profile: defaultProfile(cred.user.email)
       });
 
       console.log("registered", cred.user.uid);

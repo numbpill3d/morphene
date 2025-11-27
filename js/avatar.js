@@ -9,7 +9,8 @@ import {
   doc,
   getDoc,
   collection,
-  getDocs
+  getDocs,
+  setDoc
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 const avatarStage = document.getElementById("avatar-stage");
@@ -19,6 +20,10 @@ const equippedSlotsEl = document.getElementById("equipped-slots");
 const layerDebugEl = document.getElementById("layer-debug");
 const avatarStatusEl = document.getElementById("avatar-status");
 const refreshBtn = document.getElementById("btn-refresh-avatar");
+const profileNameEl = document.getElementById("avatar-profile-name");
+const profilePronounsEl = document.getElementById("avatar-profile-pronouns");
+const profileStatusEl = document.getElementById("avatar-profile-status");
+const profileTaglineEl = document.getElementById("avatar-profile-tagline");
 
 const DEFAULT_EQUIPPED = {
   baseBody: "base_default",
@@ -90,6 +95,15 @@ const FALLBACK_ITEMS = {
 };
 
 let currentUid = null;
+const defaultProfile = (email) => ({
+  displayName: email || "wanderer",
+  pronouns: "",
+  status: "haunting the grid",
+  tagline: "retro layer stacker",
+  bio: "",
+  theme: "crt",
+  accent: "red"
+});
 
 onAuthStateChanged(auth, async (user) => {
   if (!user) {
@@ -102,8 +116,18 @@ onAuthStateChanged(auth, async (user) => {
 
   const userRef = doc(db, "users", user.uid);
   const userSnap = await getDoc(userRef);
+  const userData = userSnap.exists() ? userSnap.data() : {};
+  const profile = userData.profile || defaultProfile(user.email);
+
+  if (!userData.profile) {
+    await setDoc(userRef, { profile }, { merge: true });
+  }
+
+  applyTheme(profile);
+  renderProfile(profile);
+
   if (userSnap.exists()) {
-    userCoinsEl.textContent = userSnap.data().coins ?? 0;
+    userCoinsEl.textContent = userData.coins ?? 0;
   } else {
     userCoinsEl.textContent = "0";
   }
@@ -217,4 +241,25 @@ function setAvatarStatus(msg) {
   if (avatarStatusEl) {
     avatarStatusEl.textContent = msg;
   }
+}
+
+function renderProfile(profile) {
+  if (profileNameEl) profileNameEl.textContent = profile.displayName || "";
+  if (profilePronounsEl) profilePronounsEl.textContent = profile.pronouns || "";
+  if (profileStatusEl) profileStatusEl.textContent = profile.status || "";
+  if (profileTaglineEl) profileTaglineEl.textContent = profile.tagline || "";
+}
+
+function applyTheme(profile) {
+  const body = document.body;
+  if (!body) return;
+
+  if (profile.theme === "crt") {
+    body.classList.add("crt");
+  } else {
+    body.classList.remove("crt");
+  }
+
+  body.classList.remove("accent-red", "accent-cyan", "accent-violet", "accent-lime");
+  body.classList.add(`accent-${profile.accent || "red"}`);
 }

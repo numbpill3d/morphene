@@ -37,6 +37,15 @@ let currentUserCoins = 0;
 let listingsCache = [];
 let ownedItemIds = new Set();
 let filtersBound = false;
+const defaultProfile = (email) => ({
+  displayName: email || "wanderer",
+  pronouns: "",
+  status: "haunting the grid",
+  tagline: "retro layer stacker",
+  bio: "",
+  theme: "crt",
+  accent: "red"
+});
 
 onAuthStateChanged(auth, async (user) => {
   if (!user) {
@@ -47,7 +56,24 @@ onAuthStateChanged(auth, async (user) => {
   currentUser = user;
   userEmailEl.textContent = user.email;
 
-  await refreshUserCoins(user.uid);
+  const userRef = doc(db, "users", user.uid);
+  const userSnap = await getDoc(userRef);
+  const userData = userSnap.exists() ? userSnap.data() : {};
+  const profile = userData.profile || defaultProfile(user.email);
+
+  if (!userData.profile) {
+    await setDoc(userRef, { profile }, { merge: true });
+  }
+
+  applyTheme(profile);
+
+  if (userSnap.exists()) {
+    currentUserCoins = userData.coins ?? 0;
+    userCoinsEl.textContent = currentUserCoins;
+  } else {
+    currentUserCoins = 0;
+    userCoinsEl.textContent = "0";
+  }
 
   if (!filtersBound) {
     bindMarketFilters();
@@ -324,4 +350,18 @@ function formatAge(timestamp) {
   if (hours < 24) return `${hours}h ago`;
   const days = Math.floor(hours / 24);
   return `${days}d ago`;
+}
+
+function applyTheme(profile) {
+  const body = document.body;
+  if (!body) return;
+
+  if (profile.theme === "crt") {
+    body.classList.add("crt");
+  } else {
+    body.classList.remove("crt");
+  }
+
+  body.classList.remove("accent-red", "accent-cyan", "accent-violet", "accent-lime");
+  body.classList.add(`accent-${profile.accent || "red"}`);
 }

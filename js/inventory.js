@@ -29,6 +29,15 @@ let inventoryItems = [];
 let equippedData = {};
 let hasInventory = false;
 let filtersBound = false;
+const defaultProfile = (email) => ({
+  displayName: email || "wanderer",
+  pronouns: "",
+  status: "haunting the grid",
+  tagline: "retro layer stacker",
+  bio: "",
+  theme: "crt",
+  accent: "red"
+});
 
 onAuthStateChanged(auth, async (user) => {
   if (!user) {
@@ -40,8 +49,17 @@ onAuthStateChanged(auth, async (user) => {
 
   const userRef = doc(db, "users", user.uid);
   const userSnap = await getDoc(userRef);
+  const userData = userSnap.exists() ? userSnap.data() : {};
+  const profile = userData.profile || defaultProfile(user.email);
+
+  if (!userData.profile) {
+    await setDoc(userRef, { profile }, { merge: true });
+  }
+
+  applyTheme(profile);
+
   if (userSnap.exists()) {
-    userCoinsEl.textContent = userSnap.data().coins ?? 0;
+    userCoinsEl.textContent = userData.coins ?? 0;
   } else {
     userCoinsEl.textContent = "0";
   }
@@ -280,4 +298,18 @@ function updateCollectionStats(items, equippedMap = {}) {
     `rarity mix: ${rarityLine}\n` +
     `slot coverage: ${slotLine}\n` +
     `equipped slots filled: ${equippedLine}`;
+}
+
+function applyTheme(profile) {
+  const body = document.body;
+  if (!body) return;
+
+  if (profile.theme === "crt") {
+    body.classList.add("crt");
+  } else {
+    body.classList.remove("crt");
+  }
+
+  body.classList.remove("accent-red", "accent-cyan", "accent-violet", "accent-lime");
+  body.classList.add(`accent-${profile.accent || "red"}`);
 }
