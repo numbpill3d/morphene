@@ -1,0 +1,10 @@
+<svg width="260" height="420" xmlns="http://www.w3.org/2000/svg">
+  <!-- Base body placeholder -->
+  <rect width="260" height="420" fill="#2a1810"/>
+  <rect x="80" y="50" width="100" height="120" fill="#ffcc99" stroke="#8b4513" stroke-width="2"/>
+  <rect x="60" y="170" width="40" height="100" fill="#ffcc99" stroke="#8b4513" stroke-width="2"/>
+  <rect x="160" y="170" width="40" height="100" fill="#ffcc99" stroke="#8b4513" stroke-width="2"/>
+  <rect x="90" y="270" width="30" height="120" fill="#ffcc99" stroke="#8b4513" stroke-width="2"/>
+  <rect x="140" y="270" width="30" height="120" fill="#ffcc99" stroke="#8b4513" stroke-width="2"/>
+  <text x="130" y="210" font-family="monospace" font-size="12" fill="#333" text-anchor="middle">BASE SHELL</text>
+</svg>

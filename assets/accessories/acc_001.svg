@@ -1,0 +1,8 @@
+<svg width="260" height="420" xmlns="http://www.w3.org/2000/svg">
+  <!-- Gold chain placeholder -->
+  <rect width="260" height="420" fill="transparent"/>
+  <circle cx="130" cy="200" r="25" fill="none" stroke="#ffd700" stroke-width="4"/>
+  <circle cx="130" cy="200" r="15" fill="none" stroke="#ffd700" stroke-width="3"/>
+  <circle cx="130" cy="200" r="8" fill="none" stroke="#ffd700" stroke-width="2"/>
+  <text x="130" y="240" font-family="monospace" font-size="10" fill="#666" text-anchor="middle">GOLD CHAIN</text>
+</svg>

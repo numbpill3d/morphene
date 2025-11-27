@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Inventory Vault / Void Avatar Lounge</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="crt">
+
+  <div class="page-shell">
+    <header class="window window-top">
+      <div class="window-titlebar">
+        <span class="title-dot">●</span>
+        <span>INVENTORY VAULT</span>
+        <span class="title-right">layer collection engine</span>
+      </div>
+      <div class="window-body window-body-split">
+        <div class="panel panel-left">
+          <h1 class="section-title">your collection</h1>
+          <div class="nav-links">
+            <a href="index.html">[ gateway ]</a>
+            <a href="avatar.html">[ avatar room ]</a>
+            <a href="market.html">[ market ]</a>
+          </div>
+          <div class="status-box">
+            <div class="status-line">USER: <span id="user-email"></span></div>
+            <div class="status-line">COINS: <span id="user-coins"></span></div>
+          </div>
+          
+          <div class="sub-window">
+            <div class="sub-window-titlebar">equipped layers</div>
+            <div class="sub-window-body">
+              <div id="equipped-summary" class="equipped-list">
+                <!-- equipped items displayed here -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel panel-right">
+          <div class="sub-window">
+            <div class="sub-window-titlebar">inventory grid</div>
+            <div class="sub-window-body">
+              <div id="inventory-grid" class="inventory-grid">
+                <!-- inventory items injected here -->
+              </div>
+              <div id="inventory-empty" class="hint-text" style="display:none;">
+                No items yet. Visit the Market to buy your first layers.
+              </div>
+            </div>
+          </div>
+
+          <div class="sub-window">
+            <div class="sub-window-titlebar">collection stats</div>
+            <div class="sub-window-body">
+              <div id="collection-stats" class="debug-console">
+                Loading collection data...
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <footer class="footer-bar">
+      <span>collect layers. stack them. become the dream.</span>
+      <span>all items stored in nested inventory collections.</span>
+    </footer>
+  </div>
+
+  <script type="module" src="js/inventory.js"></script>
+</body>
+</html>

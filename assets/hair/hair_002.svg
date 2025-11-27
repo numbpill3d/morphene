@@ -1,0 +1,8 @@
+<svg width="260" height="420" xmlns="http://www.w3.org/2000/svg">
+  <!-- Red hair placeholder -->
+  <rect width="260" height="420" fill="transparent"/>
+  <ellipse cx="130" cy="70" rx="60" ry="40" fill="#8b0000"/>
+  <ellipse cx="90" cy="85" rx="25" ry="35" fill="#8b0000"/>
+  <ellipse cx="170" cy="85" rx="25" ry="35" fill="#8b0000"/>
+  <text x="130" y="140" font-family="monospace" font-size="10" fill="#666" text-anchor="middle">RED HAIR</text>
+</svg>

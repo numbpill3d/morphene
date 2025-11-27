@@ -1,0 +1,8 @@
+<svg width="260" height="420" xmlns="http://www.w3.org/2000/svg">
+  <!-- Black hair placeholder -->
+  <rect width="260" height="420" fill="transparent"/>
+  <ellipse cx="130" cy="70" rx="60" ry="40" fill="#2c1810"/>
+  <ellipse cx="90" cy="85" rx="25" ry="35" fill="#2c1810"/>
+  <ellipse cx="170" cy="85" rx="25" ry="35" fill="#2c1810"/>
+  <text x="130" y="140" font-family="monospace" font-size="10" fill="#333" text-anchor="middle">BLACK HAIR</text>
+</svg>

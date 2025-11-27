@@ -1,0 +1,7 @@
+<svg width="260" height="420" xmlns="http://www.w3.org/2000/svg">
+  <!-- Silver ring placeholder -->
+  <rect width="260" height="420" fill="transparent"/>
+  <ellipse cx="150" cy="350" rx="12" ry="8" fill="none" stroke="#c0c0c0" stroke-width="3"/>
+  <ellipse cx="110" cy="350" rx="12" ry="8" fill="none" stroke="#c0c0c0" stroke-width="3"/>
+  <text x="130" y="380" font-family="monospace" font-size="10" fill="#666" text-anchor="middle">SILVER RING</text>
+</svg>

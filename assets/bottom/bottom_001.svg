@@ -1,0 +1,8 @@
+<svg width="260" height="420" xmlns="http://www.w3.org/2000/svg">
+  <!-- Blue jeans placeholder -->
+  <rect width="260" height="420" fill="transparent"/>
+  <rect x="90" y="240" width="35" height="150" fill="#003366" stroke="#001133" stroke-width="2"/>
+  <rect x="135" y="240" width="35" height="150" fill="#003366" stroke="#001133" stroke-width="2"/>
+  <circle cx="130" cy="250" r="3" fill="#ffd700"/>
+  <text x="130" y="400" font-family="monospace" font-size="10" fill="#666" text-anchor="middle">BLUE JEANS</text>
+</svg>
