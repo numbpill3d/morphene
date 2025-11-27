@@ -33,6 +33,29 @@
           <div class="sub-window">
             <div class="sub-window-titlebar">active market</div>
             <div class="sub-window-body">
+              <div class="filter-bar">
+                <label>
+                  sort
+                  <select id="market-sort">
+                    <option value="recent">recent first</option>
+                    <option value="price-asc">price: low → high</option>
+                    <option value="price-desc">price: high → low</option>
+                  </select>
+                </label>
+                <label>
+                  slot filter
+                  <select id="market-slot">
+                    <option value="all">all</option>
+                    <option value="baseBody">base body</option>
+                    <option value="eyes">eyes</option>
+                    <option value="hair">hair</option>
+                    <option value="top">top</option>
+                    <option value="bottom">bottom</option>
+                    <option value="accessory1">accessory #1</option>
+                    <option value="accessory2">accessory #2</option>
+                  </select>
+                </label>
+              </div>
               <div id="listing-list" class="listing-list">
                 <!-- listings injected here -->
               </div>

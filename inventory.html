@@ -42,6 +42,35 @@
           <div class="sub-window">
             <div class="sub-window-titlebar">inventory grid</div>
             <div class="sub-window-body">
+              <div class="filter-bar">
+                <label>
+                  slot
+                  <select id="filter-slot">
+                    <option value="all">all</option>
+                    <option value="baseBody">base body</option>
+                    <option value="eyes">eyes</option>
+                    <option value="hair">hair</option>
+                    <option value="top">top</option>
+                    <option value="bottom">bottom</option>
+                    <option value="accessory1">accessory #1</option>
+                    <option value="accessory2">accessory #2</option>
+                  </select>
+                </label>
+                <label>
+                  rarity
+                  <select id="filter-rarity">
+                    <option value="all">all</option>
+                    <option value="common">common</option>
+                    <option value="uncommon">uncommon</option>
+                    <option value="rare">rare</option>
+                  </select>
+                </label>
+                <label class="filter-search">
+                  search
+                  <input id="filter-search" placeholder="name or id">
+                </label>
+                <button id="filter-clear" class="btn btn-ghost" type="button">reset</button>
+              </div>
               <div id="inventory-grid" class="inventory-grid">
                 <!-- inventory items injected here -->
               </div>

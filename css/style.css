@@ -49,6 +49,22 @@ body.crt::before {
   mix-blend-mode: soft-light;
 }
 
+body.accent-red {
+  --ink-accent: #ff0033;
+}
+
+body.accent-cyan {
+  --ink-accent: #00e6ff;
+}
+
+body.accent-violet {
+  --ink-accent: #ad7bff;
+}
+
+body.accent-lime {
+  --ink-accent: #76ff6b;
+}
+
 /* layout */
 
 .page-shell {
@@ -270,6 +286,21 @@ input:focus {
   box-shadow: 0 0 6px rgba(255, 0, 51, 0.6);
 }
 
+select {
+  width: 100%;
+  padding: 4px 5px;
+  font-family: var(--font-body);
+  font-size: 12px;
+  background: #050507;
+  border: 1px solid #2a2a3a;
+  color: var(--ink-main);
+}
+
+select:focus {
+  outline: 1px solid var(--ink-accent);
+  box-shadow: 0 0 6px rgba(255, 0, 51, 0.6);
+}
+
 /* buttons */
 
 .btn {
@@ -321,6 +352,13 @@ input:focus {
   image-rendering: pixelated;
 }
 
+.avatar-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 6px 0 4px;
+}
+
 /* equipped list */
 
 .equipped-list {
@@ -335,6 +373,27 @@ input:focus {
 }
 
 /* inventory */
+
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 6px;
+  align-items: flex-end;
+}
+
+.filter-bar label {
+  min-width: 140px;
+}
+
+.filter-bar .filter-search {
+  flex: 1;
+  min-width: 160px;
+}
+
+.filter-bar textarea {
+  width: 100%;
+}
 
 .inventory-grid {
   display: grid;
@@ -352,6 +411,11 @@ input:focus {
   font-size: 11px;
 }
 
+.inventory-card.equipped {
+  border-color: var(--ink-accent);
+  box-shadow: 0 0 8px rgba(255, 0, 51, 0.4);
+}
+
 .inventory-card-header {
   display: flex;
   justify-content: space-between;
@@ -363,6 +427,20 @@ input:focus {
 
 .inventory-card-cat {
   color: var(--ink-muted);
+}
+
+.inventory-pill-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  color: var(--ink-muted);
+}
+
+.rarity-pill {
+  display: inline-block;
+  padding: 1px 5px;
+  border: 1px solid var(--line-soft);
+  text-transform: uppercase;
 }
 
 /* market */
@@ -384,9 +462,29 @@ input:focus {
   align-items: center;
 }
 
+.listing-card.owned {
+  border-color: var(--ink-accent);
+  box-shadow: 0 0 6px rgba(255, 0, 51, 0.3);
+}
+
+.listing-card.is-seller {
+  border-color: #44445a;
+}
+
+.listing-card.missing {
+  border-style: dashed;
+  opacity: 0.85;
+}
+
 .listing-info {
   display: flex;
   flex-direction: column;
+}
+
+.listing-meta {
+  margin-top: 3px;
+  color: var(--ink-muted);
+  font-size: 10px;
 }
 
 /* debug console */
