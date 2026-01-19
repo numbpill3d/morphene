@@ -2,13 +2,13 @@
 // Sample data setup for Void Avatar Lounge
 // Run this once to populate Firestore with sample items
 
-import { db } from "./firebase-init.js";
 import {
+  db,
   collection,
   addDoc,
   setDoc,
   doc
-} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+} from "./firebase-init.js";
 
 // Sample items data
 const sampleItems = [

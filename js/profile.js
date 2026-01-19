@@ -1,15 +1,15 @@
 // js/profile.js
 
-import { auth, db } from "./firebase-init.js";
 import {
-  onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-
-import {
+  auth,
+  db,
+  onAuthStateChanged,
   doc,
   getDoc,
   setDoc
-} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+} from "./firebase-init.js";
+
+import { defaultProfile } from "../config/app.js";
 
 const userEmailEl = document.getElementById("user-email");
 const userCoinsEl = document.getElementById("user-coins");
@@ -31,16 +31,6 @@ const themeInput = document.getElementById("theme");
 const accentInput = document.getElementById("accent");
 const profileError = document.getElementById("profile-error");
 const profileSuccess = document.getElementById("profile-success");
-
-const defaultProfile = (email) => ({
-  displayName: email || "new user",
-  pronouns: "",
-  status: "haunting the grid",
-  tagline: "retro layer stacker",
-  bio: "",
-  theme: "crt",
-  accent: "red"
-});
 
 onAuthStateChanged(auth, async (user) => {
   if (!user) {

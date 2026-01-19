@@ -1,11 +1,9 @@
 // js/market.js
 
-import { auth, db } from "./firebase-init.js";
 import {
-  onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-
-import {
+  auth,
+  db,
+  onAuthStateChanged,
   doc,
   getDoc,
   setDoc,
@@ -16,7 +14,9 @@ import {
   runTransaction,
   query,
   where
-} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+} from "./firebase-init.js";
+
+import { defaultProfile } from "../config/app.js";
 
 const userEmailEl = document.getElementById("user-email");
 const userCoinsEl = document.getElementById("user-coins");
@@ -37,15 +37,6 @@ let currentUserCoins = 0;
 let listingsCache = [];
 let ownedItemIds = new Set();
 let filtersBound = false;
-const defaultProfile = (email) => ({
-  displayName: email || "wanderer",
-  pronouns: "",
-  status: "haunting the grid",
-  tagline: "retro layer stacker",
-  bio: "",
-  theme: "crt",
-  accent: "red"
-});
 
 onAuthStateChanged(auth, async (user) => {
   if (!user) {
