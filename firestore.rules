@@ -1,18 +1,36 @@
-rules_version='2'
-
+rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /{document=**} {
-      // This rule allows anyone with your database reference to view, edit,
-      // and delete all data in your database. It is useful for getting
-      // started, but it is configured to expire after 30 days because it
-      // leaves your app open to attackers. At that time, all client
-      // requests to your database will be denied.
-      //
-      // Make sure to write security rules for your app before that time, or
-      // else all client requests to your database will be denied until you
-      // update your rules.
-      allow read, write: if request.time < timestamp.date(2025, 12, 16);
+
+    // Users collection - users can read/write their own document
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // User inventory subcollection - users can manage their own inventory
+    match /users/{userId}/inventory/{itemId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // User meta subcollection (equipped items, etc.)
+    match /users/{userId}/meta/{document} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // Items collection - public read access for item definitions
+    match /items/{itemId} {
+      allow read: if true;
+      allow write: if false; // Only allow writes through admin/setup scripts
+    }
+
+    // Listings collection - authenticated users can read all listings
+    match /listings/{listingId} {
+      allow read: if request.auth != null;
+      // Users can only create/update/delete their own listings
+      allow create: if request.auth != null &&
+                       request.auth.uid == resource.data.seller;
+      allow update, delete: if request.auth != null &&
+                               request.auth.uid == get(/databases/$(database)/documents/listings/$(listingId)).data.seller;
     }
   }
 }
