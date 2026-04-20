@@ -1,5 +1,6 @@
 // js/profile.js
 
+import { applyTheme } from "./theme.js";
 import {
   auth,
   db,
@@ -109,16 +110,3 @@ function renderProfileCard(profile) {
   profileBio.textContent = profile.bio || "";
 }
 
-function applyTheme(profile) {
-  const body = document.body;
-  if (!body) return;
-
-  if (profile.theme === "crt") {
-    body.classList.add("crt");
-  } else {
-    body.classList.remove("crt");
-  }
-
-  body.classList.remove("accent-red", "accent-cyan", "accent-violet", "accent-lime");
-  body.classList.add(`accent-${profile.accent || "red"}`);
-}

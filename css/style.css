@@ -382,8 +382,8 @@ select:focus {
 
 .avatar-stage {
   position: relative;
-  width: 260px;
-  height: 420px;
+  width: 200px;
+  height: 320px;
   margin-top: 8px;
   border: 1px solid var(--line-soft);
   background:
@@ -394,13 +394,15 @@ select:focus {
   image-rendering: pixelated;
 }
 
+/* layers are drawn at 100x160 and displayed at 2x (200x320) */
 .avatar-stage img.layer {
   position: absolute;
   top: 0;
   left: 0;
-  width: 260px;
-  height: 420px;
+  width: 200px;
+  height: 320px;
   image-rendering: pixelated;
+  image-rendering: crisp-edges;
 }
 
 .avatar-actions {
