@@ -203,7 +203,7 @@ function renderListings() {
     info.innerHTML = `
       <div>${item?.displayName || data.itemId}</div>
       <div>sigil id: ${data.itemId}</div>
-      <div>price: ${data.price} GP</div>
+      <div>price: ${data.price} mana</div>
       <div>dealer: ${shortId(data.seller)}</div>
     `;
 
@@ -217,17 +217,17 @@ function renderListings() {
     if (isSeller) {
       const btn = document.createElement("button");
       btn.className = "btn btn-ghost";
-      btn.textContent = "banish listing";
+      btn.textContent = "cancel";
       btn.addEventListener("click", async () => {
         await deleteDoc(doc(db, "listings", id));
-        alert("Listing banished.");
+        alert("Listing canceled.");
         await loadListings();
       });
       control.appendChild(btn);
     } else if (currentUser) {
       const btn = document.createElement("button");
       btn.className = "btn";
-      btn.textContent = canAfford ? "acquire relic" : "insufficient gold";
+      btn.textContent = canAfford ? "purchase" : "insufficient mana";
       btn.disabled = !canAfford || missingItem;
       btn.addEventListener("click", async () => {
         await buyListing(listing);
