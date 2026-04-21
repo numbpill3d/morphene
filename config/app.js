@@ -72,11 +72,11 @@ export const FALLBACK_ITEMS = {
 };
 
 export const defaultProfile = (email) => ({
-  displayName: email || "wanderer",
-  pronouns: "",
-  status: "haunting the grid",
-  tagline: "retro layer stacker",
-  bio: "",
+  displayName: email ? email.split('@')[0] : "Spirit",
+  pronouns: "void/void",
+  status: "scrying the void",
+  tagline: "necromantic layer stacker",
+  bio: "A nameless spirit wandering the threshold.",
   theme: "crt",
-  accent: "red"
-});
+  accent: "cyan"
+  });

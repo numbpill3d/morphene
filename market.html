@@ -6,37 +6,37 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="css/style.css">
 </head>
-<body class="crt accent-red">
+<body class="crt accent-cyan">
 
   <div class="page-shell">
     <header class="window window-top">
       <div class="window-titlebar">
-        <span class="title-dot">●</span>
-        <span>MARKET NOISE</span>
-        <span class="title-right">user to user trades</span>
+        <span class="title-dot">✥</span>
+        <span>MORPHENE // THE BLACK MARKET</span>
+        <span class="title-right">forbidden exchange</span>
       </div>
       <div class="window-body window-body-split">
         <div class="panel panel-left">
-          <h1 class="section-title">live listings</h1>
+          <h1 class="section-title">available relics</h1>
           <div class="nav-links">
-            <a href="index.html">[ gateway ]</a>
-            <a href="avatar.html">[ avatar room ]</a>
-            <a href="inventory.html">[ inventory ]</a>
-            <a href="profile.html">[ profile ]</a>
+            <a href="index.html">The Threshold</a>
+            <a href="avatar.html">Altar of Bone</a>
+            <a href="inventory.html">Inventory Vault</a>
+            <a href="profile.html">Soul Profile</a>
           </div>
           <div class="status-box">
-            <div class="status-line">USER: <span id="user-email"></span></div>
-            <div class="status-line">COINS: <span id="user-coins"></span></div>
+            <div class="status-line">SOUL: <span id="user-email"></span></div>
+            <div class="status-line">GOLD: <span id="user-coins"></span></div>
           </div>
         </div>
 
         <div class="panel panel-right">
           <div class="sub-window">
-            <div class="sub-window-titlebar">active market</div>
+            <div class="sub-window-titlebar">the grand bazaar</div>
             <div class="sub-window-body">
               <div class="filter-bar">
                 <label>
-                  sort
+                  arrangement
                   <select id="market-sort">
                     <option value="recent">recent first</option>
                     <option value="price-asc">price: low → high</option>
@@ -44,7 +44,7 @@
                   </select>
                 </label>
                 <label>
-                  slot filter
+                  vessel slot filter
                   <select id="market-slot">
                     <option value="all">all</option>
                     <option value="baseBody">base body</option>
@@ -61,27 +61,26 @@
                 <!-- listings injected here -->
               </div>
               <div id="listing-empty" class="hint-text" style="display:none;">
-                No listings yet. List an item below to seed the market.
+                The bazaar is quiet. Offer an artifact below to seed the exchange.
               </div>
             </div>
           </div>
 
           <div class="sub-window">
-            <div class="sub-window-titlebar">list an item</div>
+            <div class="sub-window-titlebar">offering for trade</div>
             <div class="sub-window-body">
               <form id="list-form">
                 <label>
-                  item id
+                  artifact identifier
                   <input id="list-item-id" placeholder="hair_001" required>
                 </label>
                 <label>
-                  price (coins)
+                  price (gold pieces)
                   <input id="list-price" type="number" min="1" value="100" required>
                 </label>
-                <button type="submit" class="btn">list from inventory</button>
+                <button type="submit" class="btn">list from vault</button>
                 <div class="hint-text">
-                  For starter use your known item ids from the items collection.
-                  In a real build you would pick from owned items only.
+                  Provide the sigil identifier of the artifact you wish to trade.
                 </div>
                 <div id="list-error" class="error-text"></div>
               </form>
@@ -92,8 +91,9 @@
     </header>
 
     <footer class="footer-bar">
-      <span>market data lives in collection listings.</span>
-      <span>this version has no tax. you can add that in a cloud function.</span>
+      <span>MORPHENE v0.1-necro</span>
+      <span>dungeon-wizard core. firebase grimoire.</span>
+      <span>tread carefully.</span>
     </footer>
   </div>
 

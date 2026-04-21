@@ -6,33 +6,33 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="css/style.css">
 </head>
-<body class="crt accent-red">
+<body class="crt accent-cyan">
 
   <div class="page-shell">
     <header class="window window-top">
       <div class="window-titlebar">
-        <span class="title-dot">●</span>
-        <span>USER PROFILE</span>
-        <span class="title-right">self customization</span>
+        <span class="title-dot">✥</span>
+        <span>MORPHENE // SOUL PROFILE</span>
+        <span class="title-right">sigil modification</span>
       </div>
       <div class="window-body window-body-split">
         <div class="panel panel-left">
-          <h1 class="section-title">Identity Card</h1>
+          <h1 class="section-title">The Vessel's Record</h1>
           <div class="nav-links">
-            <a href="index.html">[ gateway ]</a>
-            <a href="avatar.html">[ avatar room ]</a>
-            <a href="inventory.html">[ inventory ]</a>
-            <a href="market.html">[ market ]</a>
+            <a href="index.html">The Threshold</a>
+            <a href="avatar.html">Altar of Bone</a>
+            <a href="inventory.html">Inventory Vault</a>
+            <a href="market.html">Black Market</a>
           </div>
           <div class="status-box">
-            <div class="status-line">USER: <span id="user-email"></span></div>
-            <div class="status-line">COINS: <span id="user-coins"></span></div>
+            <div class="status-line">SOUL: <span id="user-email"></span></div>
+            <div class="status-line">GOLD: <span id="user-coins"></span></div>
           </div>
 
           <div class="sub-window">
-            <div class="sub-window-titlebar">current profile</div>
+            <div class="sub-window-titlebar">active manifestation</div>
             <div class="sub-window-body profile-card" id="profile-card">
-              <div class="profile-name" id="profile-name">loading...</div>
+              <div class="profile-name" id="profile-name">scrying...</div>
               <div class="profile-meta">
                 <span id="profile-pronouns"></span>
                 <span id="profile-status"></span>
@@ -45,48 +45,48 @@
 
         <div class="panel panel-right">
           <div class="sub-window">
-            <div class="sub-window-titlebar">edit profile</div>
+            <div class="sub-window-titlebar">alter the soul</div>
             <div class="sub-window-body">
               <form id="profile-form">
                 <label>
-                  display name
-                  <input id="display-name" maxlength="32" required>
+                  manifestation name
+                  <input id="display-name" maxlength="32" placeholder="The Nameless One" required>
                 </label>
                 <label>
-                  pronouns
-                  <input id="pronouns" maxlength="24" placeholder="they/them">
+                  pronouns of essence
+                  <input id="pronouns" maxlength="24" placeholder="they/them/void">
                 </label>
                 <label>
-                  status
+                  ethereal status
                   <input id="status" maxlength="32" placeholder="haunting the grid">
                 </label>
                 <label>
-                  tagline
-                  <input id="tagline" maxlength="64" placeholder="retro layer stacker">
+                  arcane tagline
+                  <input id="tagline" maxlength="64" placeholder="necromantic layer stacker">
                 </label>
                 <label>
-                  bio
-                  <textarea id="bio" rows="3" maxlength="240" placeholder="write a short bio"></textarea>
+                  sacred bio
+                  <textarea id="bio" rows="3" maxlength="240" placeholder="speak of your history"></textarea>
                 </label>
                 <div class="filter-bar">
                   <label>
-                    theme
+                    vision mode
                     <select id="theme">
-                      <option value="crt">crt glow</option>
-                      <option value="clean">clean glass</option>
+                      <option value="crt">scrying glow</option>
+                      <option value="clean">crystal clear</option>
                     </select>
                   </label>
                   <label>
-                    accent
+                    soul accent
                     <select id="accent">
-                      <option value="red">red</option>
-                      <option value="cyan">cyan</option>
-                      <option value="violet">violet</option>
-                      <option value="lime">lime</option>
+                      <option value="red">blood</option>
+                      <option value="cyan">soul</option>
+                      <option value="violet">void</option>
+                      <option value="lime">slime</option>
                     </select>
                   </label>
                 </div>
-                <button type="submit" class="btn">save profile</button>
+                <button type="submit" class="btn">commit changes</button>
                 <div id="profile-error" class="error-text"></div>
                 <div id="profile-success" class="hint-text"></div>
               </form>
@@ -97,8 +97,9 @@
     </header>
 
     <footer class="footer-bar">
-      <span>identity lives in users/{uid}.profile</span>
-      <span>change theme + accent to recolor the terminal</span>
+      <span>MORPHENE v0.1-necro</span>
+      <span>dungeon-wizard core. firebase grimoire.</span>
+      <span>tread carefully.</span>
     </footer>
   </div>
 

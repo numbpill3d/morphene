@@ -6,31 +6,31 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="css/style.css">
 </head>
-<body class="crt accent-red">
+<body class="crt accent-cyan">
 
   <div class="page-shell">
     <header class="window window-top">
       <div class="window-titlebar">
-        <span class="title-dot">●</span>
-        <span>AVATAR ROOM</span>
-        <span class="title-right">layer stack engine</span>
+        <span class="title-dot">✥</span>
+        <span>MORPHENE // THE ALTAR OF BONE</span>
+        <span class="title-right">necro-stack engine</span>
       </div>
       <div class="window-body window-body-split">
         <div class="panel panel-left">
-          <h1 class="section-title">current shell</h1>
+          <h1 class="section-title">current vessel</h1>
           <div id="avatar-stage" class="avatar-stage">
             <!-- stacked png layers will render here -->
           </div>
           <div class="avatar-actions">
-            <button id="btn-refresh-avatar" class="btn btn-ghost" type="button">reload layers</button>
-            <span id="avatar-status" class="hint-text">standing by...</span>
+            <button id="btn-refresh-avatar" class="btn btn-ghost" type="button">refresh sigils</button>
+            <span id="avatar-status" class="hint-text">scrying...</span>
           </div>
           <div class="status-box">
-            <div class="status-line">USER: <span id="user-email"></span></div>
-            <div class="status-line">COINS: <span id="user-coins"></span></div>
+            <div class="status-line">SOUL: <span id="user-email"></span></div>
+            <div class="status-line">GOLD: <span id="user-coins"></span></div>
           </div>
           <div class="sub-window">
-            <div class="sub-window-titlebar">profile</div>
+            <div class="sub-window-titlebar">soul profile</div>
             <div class="sub-window-body profile-card">
               <div id="avatar-profile-name" class="profile-name"></div>
               <div class="profile-meta">
@@ -41,26 +41,26 @@
             </div>
           </div>
           <div class="nav-links">
-            <a href="index.html">[ gateway ]</a>
-            <a href="inventory.html">[ inventory ]</a>
-            <a href="market.html">[ market ]</a>
-            <a href="profile.html">[ profile ]</a>
+            <a href="index.html">The Threshold</a>
+            <a href="inventory.html">Inventory Vault</a>
+            <a href="market.html">Black Market</a>
+            <a href="profile.html">Soul Profile</a>
           </div>
         </div>
 
         <div class="panel panel-right">
           <div class="sub-window">
-            <div class="sub-window-titlebar">equipped slots</div>
+            <div class="sub-window-titlebar">enchanted raiment</div>
             <div class="sub-window-body">
               <div id="equipped-slots" class="equipped-list"></div>
               <div class="hint-text">
-                To change what you wear, visit Inventory Vault and equip items.
+                To change your appearance, visit the Inventory Vault.
               </div>
             </div>
           </div>
 
           <div class="sub-window">
-            <div class="sub-window-titlebar">debug / layer readout</div>
+            <div class="sub-window-titlebar">arcane calculations</div>
             <div class="sub-window-body">
               <pre id="layer-debug" class="debug-console"></pre>
             </div>
@@ -70,8 +70,9 @@
     </header>
 
     <footer class="footer-bar">
-      <span>all visuals are stacked png layers.</span>
-      <span>no game engine. only html, css, javascript.</span>
+      <span>MORPHENE v0.1-necro</span>
+      <span>dungeon-wizard core. firebase grimoire.</span>
+      <span>tread carefully.</span>
     </footer>
   </div>
 

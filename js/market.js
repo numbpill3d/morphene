@@ -202,14 +202,14 @@ function renderListings() {
     info.className = "listing-info";
     info.innerHTML = `
       <div>${item?.displayName || data.itemId}</div>
-      <div>item id: ${data.itemId}</div>
-      <div>price: ${data.price} coins</div>
-      <div>seller: ${shortId(data.seller)}</div>
+      <div>sigil id: ${data.itemId}</div>
+      <div>price: ${data.price} GP</div>
+      <div>dealer: ${shortId(data.seller)}</div>
     `;
 
     const meta = document.createElement("div");
     meta.className = "listing-meta";
-    meta.textContent = `slot: ${item?.slot || item?.category || "unknown"} / rarity: ${item?.rarity || "unknown"} / listed: ${formatAge(data.createdAt)}`;
+    meta.textContent = `vessel slot: ${item?.slot || item?.category || "unknown"} / rarity: ${item?.rarity || "unknown"} / listed: ${formatAge(data.createdAt)}`;
     info.appendChild(meta);
 
     const control = document.createElement("div");
@@ -217,17 +217,17 @@ function renderListings() {
     if (isSeller) {
       const btn = document.createElement("button");
       btn.className = "btn btn-ghost";
-      btn.textContent = "cancel";
+      btn.textContent = "banish listing";
       btn.addEventListener("click", async () => {
         await deleteDoc(doc(db, "listings", id));
-        alert("listing canceled.");
+        alert("Listing banished.");
         await loadListings();
       });
       control.appendChild(btn);
     } else if (currentUser) {
       const btn = document.createElement("button");
       btn.className = "btn";
-      btn.textContent = canAfford ? "buy" : "not enough coins";
+      btn.textContent = canAfford ? "acquire relic" : "insufficient gold";
       btn.disabled = !canAfford || missingItem;
       btn.addEventListener("click", async () => {
         await buyListing(listing);

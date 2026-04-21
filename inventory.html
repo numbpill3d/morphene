@@ -6,31 +6,31 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="css/style.css">
 </head>
-<body class="crt accent-red">
+<body class="crt accent-cyan">
 
   <div class="page-shell">
     <header class="window window-top">
       <div class="window-titlebar">
-        <span class="title-dot">●</span>
-        <span>INVENTORY VAULT</span>
-        <span class="title-right">layer collection engine</span>
+        <span class="title-dot">✥</span>
+        <span>MORPHENE // THE GRIMOIRE VAULT</span>
+        <span class="title-right">arcane collection</span>
       </div>
       <div class="window-body window-body-split">
         <div class="panel panel-left">
-          <h1 class="section-title">your collection</h1>
+          <h1 class="section-title">your artifacts</h1>
           <div class="nav-links">
-            <a href="index.html">[ gateway ]</a>
-            <a href="avatar.html">[ avatar room ]</a>
-            <a href="market.html">[ market ]</a>
-            <a href="profile.html">[ profile ]</a>
+            <a href="index.html">The Threshold</a>
+            <a href="avatar.html">Altar of Bone</a>
+            <a href="market.html">Black Market</a>
+            <a href="profile.html">Soul Profile</a>
           </div>
           <div class="status-box">
-            <div class="status-line">USER: <span id="user-email"></span></div>
-            <div class="status-line">COINS: <span id="user-coins"></span></div>
+            <div class="status-line">SOUL: <span id="user-email"></span></div>
+            <div class="status-line">GOLD: <span id="user-coins"></span></div>
           </div>
           
           <div class="sub-window">
-            <div class="sub-window-titlebar">equipped layers</div>
+            <div class="sub-window-titlebar">active incantations</div>
             <div class="sub-window-body">
               <div id="equipped-summary" class="equipped-list">
                 <!-- equipped items displayed here -->
@@ -41,11 +41,11 @@
 
         <div class="panel panel-right">
           <div class="sub-window">
-            <div class="sub-window-titlebar">inventory grid</div>
+            <div class="sub-window-titlebar">the drawer of souls</div>
             <div class="sub-window-body">
               <div class="filter-bar">
                 <label>
-                  slot
+                  vessel slot
                   <select id="filter-slot">
                     <option value="all">all</option>
                     <option value="baseBody">base body</option>
@@ -67,8 +67,8 @@
                   </select>
                 </label>
                 <label class="filter-search">
-                  search
-                  <input id="filter-search" placeholder="name or id">
+                  search sigils
+                  <input id="filter-search" placeholder="name or identifier">
                 </label>
                 <button id="filter-clear" class="btn btn-ghost" type="button">reset</button>
               </div>
@@ -76,16 +76,16 @@
                 <!-- inventory items injected here -->
               </div>
               <div id="inventory-empty" class="hint-text" style="display:none;">
-                No items yet. Visit the Market to buy your first layers.
+                The vault is empty. Visit the Black Market to trade for artifacts.
               </div>
             </div>
           </div>
 
           <div class="sub-window">
-            <div class="sub-window-titlebar">collection stats</div>
+            <div class="sub-window-titlebar">treasury manifest</div>
             <div class="sub-window-body">
               <div id="collection-stats" class="debug-console">
-                Loading collection data...
+                Loading manifest...
               </div>
             </div>
           </div>
@@ -94,8 +94,9 @@
     </header>
 
     <footer class="footer-bar">
-      <span>collect layers. stack them. become the dream.</span>
-      <span>all items stored in nested inventory collections.</span>
+      <span>MORPHENE v0.1-necro</span>
+      <span>dungeon-wizard core. firebase grimoire.</span>
+      <span>tread carefully.</span>
     </footer>
   </div>
 
