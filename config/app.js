@@ -4,70 +4,111 @@
 export const STARTING_COINS = 1000;
 
 export const DEFAULT_EQUIPPED = {
-  baseBody: "base_default",
+  baseBody: "etherian_base_1",
   eyes: "eyes_default",
   hair: "hair_001",
-  top: "top_001",
-  bottom: "bottom_001",
-  accessory1: "acc_001"
+  top: "top_backwoods",
+  bottom: "pants_black_shorts",
+  accessory1: "mask_cyber_stratus"
 };
 
 export const FALLBACK_ITEMS = {
-  base_default: {
-    displayName: "Base Shell",
-    slot: "baseBody",
-    category: "baseBody",
-    z: 10,
-    src: "assets/body/base_default.svg",
-    layers: [{ src: "assets/body/base_default.svg", z: 10 }]
+  /* --- ETHERIAN VESSELS (BASES) --- */
+  "etherian_base_1": {
+    displayName: "Etherian Vessel I",
+    slot: "baseBody", category: "baseBody", z: 10,
+    src: "assets/base/etherian/etherian-base-1.png",
+    layers: [{ src: "assets/base/etherian/etherian-base-1.png", z: 10 }]
   },
-  eyes_default: {
-    displayName: "Default Eyes",
-    slot: "eyes",
-    category: "eyes",
-    z: 30,
-    src: "assets/eyes/eyes_default.svg",
-    layers: [{ src: "assets/eyes/eyes_default.svg", z: 30 }]
+  "etherian_base_2": {
+    displayName: "Etherian Vessel II",
+    slot: "baseBody", category: "baseBody", z: 10,
+    src: "assets/base/etherian/etherian-base-2.png",
+    layers: [{ src: "assets/base/etherian/etherian-base-2.png", z: 10 }]
   },
-  hair_001: {
-    displayName: "Black Hair",
-    slot: "hair",
-    category: "hair",
-    z: 20,
-    src: "assets/hair/hair_001.svg",
-    layers: [{ src: "assets/hair/hair_001.svg", z: 20 }]
+  "etherian_base_3": {
+    displayName: "Etherian Vessel III",
+    slot: "baseBody", category: "baseBody", z: 10,
+    src: "assets/base/etherian/etherian-base-3.png",
+    layers: [{ src: "assets/base/etherian/etherian-base-3.png", z: 10 }]
   },
-  top_001: {
-    displayName: "Black Tee",
-    slot: "top",
-    category: "top",
-    z: 40,
-    src: "assets/top/top_001.svg",
-    layers: [{ src: "assets/top/top_001.svg", z: 40 }]
+
+  /* --- ENCHANTED RAIMENT (TOPS) --- */
+  "top_backwoods": {
+    displayName: "Backwoods Tunic",
+    slot: "top", category: "top", z: 30,
+    src: "assets/top/top_backwoods_shirt_etherian.png",
+    layers: [{ src: "assets/top/top_backwoods_shirt_etherian.png", z: 30 }]
   },
-  bottom_001: {
-    displayName: "Blue Jeans",
-    slot: "bottom",
-    category: "bottom",
-    z: 50,
-    src: "assets/bottom/bottom_001.svg",
-    layers: [{ src: "assets/bottom/bottom_001.svg", z: 50 }]
+  "top_dark_shawl": {
+    displayName: "Shadow-Woven Shawl",
+    slot: "top", category: "top", z: 32,
+    src: "assets/top/top_darkshawl_etherian.png",
+    layers: [{ src: "assets/top/top_darkshawl_etherian.png", z: 32 }]
   },
-  acc_001: {
-    displayName: "Gold Chain",
-    slot: "accessory1",
-    category: "accessory1",
-    z: 35,
-    src: "assets/accessories/acc_001.svg",
-    layers: [{ src: "assets/accessories/acc_001.svg", z: 35 }]
+  "top_tribal_tattered": {
+    displayName: "Tattered Tribal Garb",
+    slot: "top", category: "top", z: 30,
+    src: "assets/top/top_darktatteredtribal_etherian.png",
+    layers: [{ src: "assets/top/top_darktatteredtribal_etherian.png", z: 30 }]
   },
-  acc_002: {
-    displayName: "Silver Ring",
-    slot: "accessory2",
-    category: "accessory2",
-    z: 60,
-    src: "assets/accessories/acc_002.svg",
-    layers: [{ src: "assets/accessories/acc_002.svg", z: 60 }]
+  "top_goth_mesh": {
+    displayName: "Void-Mesh Shirt",
+    slot: "top", category: "top", z: 30,
+    src: "assets/top/top_gothmesh_shirt_etherian.png",
+    layers: [{ src: "assets/top/top_gothmesh_shirt_etherian.png", z: 30 }]
+  },
+  "top_vexxer_1": {
+    displayName: "Vexxer Plate I",
+    slot: "top", category: "top", z: 35,
+    src: "assets/top/top_vexxertop_etherian.png",
+    layers: [{ src: "assets/top/top_vexxertop_etherian.png", z: 35 }]
+  },
+  "top_witch_doctor": {
+    displayName: "Witch Doctor's Mantle",
+    slot: "top", category: "top", z: 35,
+    src: "assets/top/top_witchdoctor_etherian.png",
+    layers: [{ src: "assets/top/top_witchdoctor_etherian.png", z: 35 }]
+  },
+
+  /* --- LOWER RAIMENT (BOTTOMS) --- */
+  "pants_black_shorts": {
+    displayName: "Obsidian Breeches",
+    slot: "bottom", category: "bottom", z: 20,
+    src: "assets/bottom/pants_blackshorts_etherian.png",
+    layers: [{ src: "assets/bottom/pants_blackshorts_etherian.png", z: 20 }]
+  },
+  "pants_dementia_skirt": {
+    displayName: "Dementia Tassets",
+    slot: "bottom", category: "bottom", z: 25,
+    src: "assets/bottom/pants_dementiaskirt_etherian.png",
+    layers: [{ src: "assets/bottom/pants_dementiaskirt_etherian.png", z: 25 }]
+  },
+  "pants_purple_skirt": {
+    displayName: "Royal Amethyst Wrap",
+    slot: "bottom", category: "bottom", z: 25,
+    src: "assets/bottom/pants_purpleskirt_etherian.png",
+    layers: [{ src: "assets/bottom/pants_purpleskirt_etherian.png", z: 25 }]
+  },
+
+  /* --- HEADGEAR & ARTIFACTS --- */
+  "hat_black_beanie": {
+    displayName: "Rogue's Night-Cap",
+    slot: "head", category: "head", z: 50,
+    src: "assets/head/hat_blackbeanie_etherian.png",
+    layers: [{ src: "assets/head/hat_blackbeanie_etherian.png", z: 50 }]
+  },
+  "mask_cyber_stratus": {
+    displayName: "Cyber-Stratus Veil",
+    slot: "accessory1", category: "accessory1", z: 55,
+    src: "assets/accessories/mask_cyberstratus_etherian.png",
+    layers: [{ src: "assets/accessories/mask_cyberstratus_etherian.png", z: 55 }]
+  },
+  "acc_radio_glasses": {
+    displayName: "Spectral Scrying Glass",
+    slot: "accessory2", category: "accessory2", z: 52,
+    src: "assets/accessories/face_radioglasses_etherian.png",
+    layers: [{ src: "assets/accessories/face_radioglasses_etherian.png", z: 52 }]
   }
 };
 
