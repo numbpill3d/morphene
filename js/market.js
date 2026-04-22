@@ -33,11 +33,16 @@ const listItemIdInput = document.getElementById("list-item-id");
 const listPriceInput = document.getElementById("list-price");
 const listError = document.getElementById("list-error");
 
+const vaultList = document.getElementById("vault-list");
+
 let currentUser = null;
 let currentUserCoins = 0;
 let listingsCache = [];
+let ownedItems = []; // Full item data objects
 let ownedItemIds = new Set();
 let filtersBound = false;
+
+const VOID_TAX = 0.05; // 5% mana sink
 
 onAuthStateChanged(auth, async (user) => {
   if (!user) {
@@ -71,9 +76,51 @@ onAuthStateChanged(auth, async (user) => {
     bindMarketFilters();
   }
 
-  ownedItemIds = await loadOwnedItemIds(user.uid);
+  await refreshOwnedItems();
   await loadListings();
 });
+
+async function refreshOwnedItems() {
+  if (!currentUser) return;
+  const invCol = collection(db, "users", currentUser.uid, "inventory");
+  const invSnap = await getDocs(invCol);
+  
+  ownedItems = [];
+  ownedItemIds = new Set();
+  
+  for (const doc of invSnap.docs) {
+    const data = doc.data();
+    ownedItems.push({ id: doc.id, ...data });
+    ownedItemIds.add(doc.id);
+  }
+  
+  renderVault();
+}
+
+async function renderVault() {
+  if (!vaultList) return;
+  vaultList.innerHTML = "";
+  
+  if (ownedItems.length === 0) {
+    vaultList.innerHTML = `<div class="hint-text">Vault is empty.</div>`;
+    return;
+  }
+
+  for (const item of ownedItems) {
+    const card = document.createElement("div");
+    card.className = "inventory-card";
+    card.innerHTML = `
+      <div class="inventory-card-name">${item.displayName || item.id}</div>
+      <div class="inventory-card-cat">${item.slot || item.category || ""}</div>
+    `;
+    card.title = "Click to prepare for trade";
+    card.addEventListener("click", () => {
+      listItemIdInput.value = item.id;
+      listPriceInput.focus();
+    });
+    vaultList.appendChild(card);
+  }
+}
 
 if (listForm) {
   listForm.addEventListener("submit", async (e) => {
@@ -85,21 +132,12 @@ if (listForm) {
     const price = parseInt(listPriceInput.value, 10);
 
     if (!itemId || Number.isNaN(price) || price < 1) {
-      listError.textContent = "invalid item id or price";
+      listError.textContent = "invalid artifact id or mana price";
       return;
     }
 
-    const invRef = doc(db, "users", currentUser.uid, "inventory", itemId);
-    const invSnap = await getDoc(invRef);
-    if (!invSnap.exists()) {
-      listError.textContent = "you do not own this item in inventory";
-      return;
-    }
-
-    const itemRef = doc(db, "items", itemId);
-    const itemSnap = await getDoc(itemRef);
-    if (!itemSnap.exists()) {
-      listError.textContent = "item id not found in items collection";
+    if (!ownedItemIds.has(itemId)) {
+      listError.textContent = "you do not own this artifact in your vault";
       return;
     }
 
@@ -112,7 +150,7 @@ if (listForm) {
       )
     );
     if (!dupeSnap.empty) {
-      listError.textContent = "you already have this item listed";
+      listError.textContent = "already listed for trade";
       return;
     }
 
@@ -123,10 +161,69 @@ if (listForm) {
       createdAt: Date.now()
     });
 
-    alert("listed. it will appear above right away.");
+    alert("Artifact listed in the Bazaar.");
     listForm.reset();
     await loadListings();
   });
+}
+
+async function buyListing(listing) {
+  const { id, data } = listing;
+  if (!currentUser) return;
+
+  if (currentUser.uid === data.seller) {
+    alert("You cannot trade with your own shadow.");
+    return;
+  }
+
+  const buyerRef = doc(db, "users", currentUser.uid);
+  const sellerRef = doc(db, "users", data.seller);
+  const listingRef = doc(db, "listings", id);
+
+  try {
+    await runTransaction(db, async (tx) => {
+      const buyerSnap = await tx.get(buyerRef);
+      const sellerSnap = await tx.get(sellerRef);
+      const listingSnap = await tx.get(listingRef);
+
+      if (!listingSnap.exists()) throw new Error("Artifact vanished from the bazaar.");
+      
+      const buyerMana = buyerSnap.data()?.coins ?? 0;
+      if (buyerMana < data.price) throw new Error("Insufficient mana.");
+
+      const tax = Math.floor(data.price * VOID_TAX);
+      const sellerPay = data.price - tax;
+
+      const sellerMana = sellerSnap.exists() ? (sellerSnap.data()?.coins ?? 0) : 0;
+
+      // Transfer Mana
+      tx.update(buyerRef, { coins: buyerMana - data.price });
+      tx.set(sellerRef, { coins: sellerMana + sellerPay }, { merge: true });
+
+      // Transfer Item
+      const buyerInvRef = doc(db, "users", currentUser.uid, "inventory", data.itemId);
+      const sellerInvRef = doc(db, "users", data.seller, "inventory", data.itemId);
+      
+      // Get item data from items collection
+      const itemSnap = await tx.get(doc(db, "items", data.itemId));
+      const itemData = itemSnap.exists() ? itemSnap.data() : { id: data.itemId };
+
+      tx.set(buyerInvRef, itemData);
+      tx.delete(sellerInvRef);
+
+      // Remove Listing
+      tx.delete(listingRef);
+    });
+
+    alert(`Ritual complete. Acquired artifact. (Void Tax: ${Math.floor(data.price * VOID_TAX)} mana)`);
+    await refreshUserCoins(currentUser.uid);
+    await refreshOwnedItems();
+    await loadListings();
+
+  } catch (err) {
+    console.error(err);
+    alert(`Ritual failed: ${err.message}`);
+  }
 }
 
 function bindMarketFilters() {
