@@ -28,6 +28,25 @@ const authStatus = document.getElementById("auth-status");
 const authUser = document.getElementById("auth-user");
 const btnLogout = document.getElementById("btn-logout");
 
+const loginSection = document.getElementById("login-section");
+const registerSection = document.getElementById("register-section");
+const toRegister = document.getElementById("to-register");
+const toLogin = document.getElementById("to-login");
+
+if (toRegister && toLogin) {
+  toRegister.addEventListener("click", (e) => {
+    e.preventDefault();
+    loginSection.style.display = "none";
+    registerSection.style.display = "block";
+  });
+
+  toLogin.addEventListener("click", (e) => {
+    e.preventDefault();
+    loginSection.style.display = "block";
+    registerSection.style.display = "none";
+  });
+}
+
 if (loginForm) {
   loginForm.addEventListener("submit", async (e) => {
     e.preventDefault();
