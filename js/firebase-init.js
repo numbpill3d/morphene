@@ -1,20 +1,20 @@
 // js/firebase-init.js
-// Firebase configuration for Void Avatar Lounge
+// Firebase configuration for MORPHENE
 
 import { FIREBASE_URLS } from "../config/firebase.js";
 
-// You'll need to replace these with your actual Firebase config values
-// from your Firebase project settings
+// Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_AUTH_DOMAIN",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_STORAGE_BUCKET",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyBekQsjCebnW8d-EtZAmbNypMSJych-JGQ",
+  authDomain: "morphene-d5eb0.firebaseapp.com",
+  projectId: "morphene-d5eb0",
+  storageBucket: "morphene-d5eb0.firebasestorage.app",
+  messagingSenderId: "1071351657264",
+  appId: "1:1071351657264:web:061e070a00bc30d6794ef5",
+  measurementId: "G-RHZ2KYY7SX"
 };
 
-// Dynamically import Firebase modules
+// Dynamically import Firebase modules from CDN to avoid build step
 const firebaseApp = await import(FIREBASE_URLS.app);
 const firebaseAuth = await import(FIREBASE_URLS.auth);
 const firebaseFirestore = await import(FIREBASE_URLS.firestore);

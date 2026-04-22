@@ -2,35 +2,34 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    // Users collection - users can read/write their own document
+    // Users collection - Public read for profiles, but only users write their own
     match /users/{userId} {
-      allow read, write: if request.auth != null && request.auth.uid == userId;
-    }
-
-    // User inventory subcollection - users can manage their own inventory
-    match /users/{userId}/inventory/{itemId} {
-      allow read, write: if request.auth != null && request.auth.uid == userId;
-    }
-
-    // User meta subcollection (equipped items, etc.)
-    match /users/{userId}/meta/{document} {
-      allow read, write: if request.auth != null && request.auth.uid == userId;
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && request.auth.uid == userId;
+      
+      // Subcollections (inventory, meta)
+      match /inventory/{itemId} {
+        allow read: if request.auth != null;
+        allow write: if request.auth != null && request.auth.uid == userId;
+      }
+      match /meta/{document} {
+        allow read: if request.auth != null;
+        allow write: if request.auth != null && request.auth.uid == userId;
+      }
     }
 
     // Items collection - public read access for item definitions
     match /items/{itemId} {
       allow read: if true;
-      allow write: if false; // Only allow writes through admin/setup scripts
+      allow write: if false;
     }
 
     // Listings collection - authenticated users can read all listings
     match /listings/{listingId} {
       allow read: if request.auth != null;
-      // Users can only create/update/delete their own listings
-      allow create: if request.auth != null &&
-                       request.auth.uid == resource.data.seller;
+      allow create: if request.auth != null;
       allow update, delete: if request.auth != null &&
-                               request.auth.uid == get(/databases/$(database)/documents/listings/$(listingId)).data.seller;
+                               request.auth.uid == resource.data.seller;
     }
   }
 }
