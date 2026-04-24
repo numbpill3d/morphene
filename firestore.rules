@@ -27,7 +27,12 @@ service cloud.firestore {
     // Listings collection - authenticated users can read all listings
     match /listings/{listingId} {
       allow read: if request.auth != null;
-      allow create: if request.auth != null;
+      allow create: if request.auth != null
+                    && request.resource.data.seller == request.auth.uid
+                    && request.resource.data.price is int
+                    && request.resource.data.price > 0
+                    && request.resource.data.itemId is string
+                    && request.resource.data.itemId.size() > 0;
       allow update, delete: if request.auth != null &&
                                request.auth.uid == resource.data.seller;
     }

@@ -167,65 +167,6 @@ if (listForm) {
   });
 }
 
-async function buyListing(listing) {
-  const { id, data } = listing;
-  if (!currentUser) return;
-
-  if (currentUser.uid === data.seller) {
-    alert("You cannot trade with your own shadow.");
-    return;
-  }
-
-  const buyerRef = doc(db, "users", currentUser.uid);
-  const sellerRef = doc(db, "users", data.seller);
-  const listingRef = doc(db, "listings", id);
-
-  try {
-    await runTransaction(db, async (tx) => {
-      const buyerSnap = await tx.get(buyerRef);
-      const sellerSnap = await tx.get(sellerRef);
-      const listingSnap = await tx.get(listingRef);
-
-      if (!listingSnap.exists()) throw new Error("Artifact vanished from the bazaar.");
-      
-      const buyerMana = buyerSnap.data()?.coins ?? 0;
-      if (buyerMana < data.price) throw new Error("Insufficient mana.");
-
-      const tax = Math.floor(data.price * VOID_TAX);
-      const sellerPay = data.price - tax;
-
-      const sellerMana = sellerSnap.exists() ? (sellerSnap.data()?.coins ?? 0) : 0;
-
-      // Transfer Mana
-      tx.update(buyerRef, { coins: buyerMana - data.price });
-      tx.set(sellerRef, { coins: sellerMana + sellerPay }, { merge: true });
-
-      // Transfer Item
-      const buyerInvRef = doc(db, "users", currentUser.uid, "inventory", data.itemId);
-      const sellerInvRef = doc(db, "users", data.seller, "inventory", data.itemId);
-      
-      // Get item data from items collection
-      const itemSnap = await tx.get(doc(db, "items", data.itemId));
-      const itemData = itemSnap.exists() ? itemSnap.data() : { id: data.itemId };
-
-      tx.set(buyerInvRef, itemData);
-      tx.delete(sellerInvRef);
-
-      // Remove Listing
-      tx.delete(listingRef);
-    });
-
-    alert(`Ritual complete. Acquired artifact. (Void Tax: ${Math.floor(data.price * VOID_TAX)} mana)`);
-    await refreshUserCoins(currentUser.uid);
-    await refreshOwnedItems();
-    await loadListings();
-
-  } catch (err) {
-    console.error(err);
-    alert(`Ritual failed: ${err.message}`);
-  }
-}
-
 function bindMarketFilters() {
   filtersBound = true;
   [marketSlotSelect, marketSortSelect].forEach((el) => {
@@ -247,17 +188,11 @@ async function loadListings() {
     return;
   }
 
-  const mapped = [];
-  for (const snap of listingsSnap.docs) {
+  const mapped = await Promise.all(listingsSnap.docs.map(async (snap) => {
     const data = snap.data();
-    const listingId = snap.id;
-
-    const itemRef = doc(db, "items", data.itemId);
-    const itemSnap = await getDoc(itemRef);
-    const item = itemSnap.exists() ? itemSnap.data() : null;
-
-    mapped.push({ id: listingId, data, item });
-  }
+    const itemSnap = await getDoc(doc(db, "items", data.itemId));
+    return { id: snap.id, data, item: itemSnap.exists() ? itemSnap.data() : null };
+  }));
 
   listingsCache = mapped;
   renderListings();
@@ -378,14 +313,10 @@ async function buyListing(listing) {
   try {
     await runTransaction(db, async (tx) => {
       const listingSnap = await tx.get(listingRef);
-      if (!listingSnap.exists()) {
-        throw new Error("listing no longer exists");
-      }
+      if (!listingSnap.exists()) throw new Error("listing no longer exists");
 
       const data = listingSnap.data();
-      if (data.seller === currentUser.uid) {
-        throw new Error("you cannot buy your own listing");
-      }
+      if (data.seller === currentUser.uid) throw new Error("you cannot buy your own listing");
 
       const buyerSnap = await tx.get(buyerRef);
       if (!buyerSnap.exists()) throw new Error("buyer record missing");
@@ -395,16 +326,20 @@ async function buyListing(listing) {
       const sellerSnap = await tx.get(sellerRef);
       const sellerCoins = sellerSnap.exists() ? sellerSnap.data().coins ?? 0 : 0;
 
+      const tax = Math.floor(data.price * VOID_TAX);
+      const sellerPay = data.price - tax;
+
       tx.set(buyerRef, { coins: buyerCoins - data.price }, { merge: true });
-      tx.set(sellerRef, { coins: sellerCoins + data.price }, { merge: true });
+      tx.set(sellerRef, { coins: sellerCoins + sellerPay }, { merge: true });
       tx.set(buyerInvRef, { acquiredAt: Date.now() });
       tx.delete(sellerInvRef);
       tx.delete(listingRef);
     });
 
-    alert("purchase complete. your inventory should now include the item.");
+    const tax = Math.floor(listing.data.price * VOID_TAX);
+    alert(`ritual complete. void tax: ${tax} mana`);
     await refreshUserCoins(currentUser.uid);
-    ownedItemIds = await loadOwnedItemIds(currentUser.uid);
+    await refreshOwnedItems();
     await loadListings();
   } catch (err) {
     console.error(err);
@@ -424,10 +359,6 @@ async function refreshUserCoins(uid) {
   }
 }
 
-async function loadOwnedItemIds(uid) {
-  const invSnap = await getDocs(collection(db, "users", uid, "inventory"));
-  return new Set(invSnap.docs.map((docSnap) => docSnap.id));
-}
 
 function formatAge(timestamp) {
   if (!timestamp) return "unknown";

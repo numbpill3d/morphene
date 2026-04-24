@@ -62,6 +62,7 @@ onAuthStateChanged(auth, async (user) => {
 
   equippedData = await loadEquippedSummary(user.uid);
   await loadInventory(user.uid);
+  renderEquippedSummary(equippedData);
 });
 
 function bindFilters() {
@@ -99,26 +100,14 @@ async function loadInventory(uid) {
     inventoryEmpty.style.display = "none";
   }
 
-  const items = [];
-  for (const docSnap of invSnap.docs) {
+  const items = await Promise.all(invSnap.docs.map(async (docSnap) => {
     const itemId = docSnap.id;
-    const itemRef = doc(db, "items", itemId);
-    const itemSnap = await getDoc(itemRef);
+    const itemSnap = await getDoc(doc(db, "items", itemId));
     if (!itemSnap.exists()) {
-      items.push({
-        itemId,
-        item: {
-          displayName: "missing item data",
-          category: "unknown",
-          slot: "unknown",
-          rarity: "unknown",
-          missing: true
-        }
-      });
-      continue;
+      return { itemId, item: { displayName: "missing item data", category: "unknown", slot: "unknown", rarity: "unknown", missing: true } };
     }
-    items.push({ itemId, item: itemSnap.data() });
-  }
+    return { itemId, item: itemSnap.data() };
+  }));
 
   hasInventory = items.length > 0;
   inventoryItems = items;
@@ -141,26 +130,25 @@ async function equipItem(uid, item, itemId) {
 }
 
 async function loadEquippedSummary(uid) {
-  equippedSummary.innerHTML = "";
-
   const equippedRef = doc(db, "users", uid, "meta", "equipped");
   const equippedSnap = await getDoc(equippedRef);
-  if (!equippedSnap.exists()) {
+  return equippedSnap.exists() ? equippedSnap.data() : {};
+}
+
+function renderEquippedSummary(equippedMap) {
+  equippedSummary.innerHTML = "";
+  const entries = Object.entries(equippedMap);
+  if (!entries.length) {
     equippedSummary.textContent = "no equipped data yet.";
-    return {};
+    return;
   }
-
-  const data = equippedSnap.data();
-  const entries = Object.entries(data);
-
+  const nameMap = new Map(inventoryItems.map(({ itemId, item }) => [itemId, item.displayName || itemId]));
   entries.forEach(([slot, itemId]) => {
     const row = document.createElement("div");
     row.className = "equipped-list-row";
-    row.innerHTML = `<span>${slot}</span><span>${itemId}</span>`;
+    row.innerHTML = `<span>${slot}</span><span>${nameMap.get(itemId) || itemId}</span>`;
     equippedSummary.appendChild(row);
   });
-
-  return data;
 }
 
 function renderInventory(equippedMap = {}) {
@@ -220,6 +208,7 @@ function renderInventory(equippedMap = {}) {
     btn.addEventListener("click", async () => {
       await equipItem(auth.currentUser.uid, item, itemId);
       equippedData = await loadEquippedSummary(auth.currentUser.uid);
+      renderEquippedSummary(equippedData);
       renderInventory(equippedData);
       alert(`equipped ${item.displayName || itemId}`);
     });

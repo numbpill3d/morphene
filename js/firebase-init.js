@@ -15,10 +15,12 @@ const firebaseConfig = {
 };
 
 // Dynamically import Firebase modules from CDN to avoid build step
-const firebaseApp = await import(FIREBASE_URLS.app);
-const firebaseAuth = await import(FIREBASE_URLS.auth);
-const firebaseFirestore = await import(FIREBASE_URLS.firestore);
-const firebaseStorage = await import(FIREBASE_URLS.storage);
+const [firebaseApp, firebaseAuth, firebaseFirestore, firebaseStorage] = await Promise.all([
+  import(FIREBASE_URLS.app),
+  import(FIREBASE_URLS.auth),
+  import(FIREBASE_URLS.firestore),
+  import(FIREBASE_URLS.storage),
+]);
 
 // Initialize Firebase services
 const app = firebaseApp.initializeApp(firebaseConfig);
