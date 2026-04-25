@@ -12,7 +12,7 @@ import {
   getDocs
 } from "./firebase-init.js";
 
-import { defaultProfile } from "../config/app.js";
+import { defaultProfile, DEFAULT_EQUIPPED, FALLBACK_ITEMS } from "../config/app.js";
 
 const userEmailEl = document.getElementById("user-email");
 const userCoinsEl = document.getElementById("user-coins");
@@ -20,6 +20,7 @@ const inventoryGrid = document.getElementById("inventory-grid");
 const inventoryEmpty = document.getElementById("inventory-empty");
 const equippedSummary = document.getElementById("equipped-summary");
 const collectionStatsEl = document.getElementById("collection-stats");
+const invAvatarStage = document.getElementById("inv-avatar-stage");
 
 const filterSlot = document.getElementById("filter-slot");
 const filterRarity = document.getElementById("filter-rarity");
@@ -63,6 +64,7 @@ onAuthStateChanged(auth, async (user) => {
   equippedData = await loadEquippedSummary(user.uid);
   await loadInventory(user.uid);
   renderEquippedSummary(equippedData);
+  await renderInventoryAvatar(user.uid);
 });
 
 function bindFilters() {
@@ -206,11 +208,12 @@ function renderInventory(equippedMap = {}) {
     btn.textContent = "equip";
     btn.disabled = !!item.missing;
     btn.addEventListener("click", async () => {
-      await equipItem(auth.currentUser.uid, item, itemId);
-      equippedData = await loadEquippedSummary(auth.currentUser.uid);
+      const uid = auth.currentUser.uid;
+      await equipItem(uid, item, itemId);
+      equippedData = await loadEquippedSummary(uid);
       renderEquippedSummary(equippedData);
       renderInventory(equippedData);
-      alert(`equipped ${item.displayName || itemId}`);
+      await renderInventoryAvatar(uid);
     });
 
     if (equippedMap[item.slot || item.category] === itemId) {
@@ -279,5 +282,31 @@ function updateCollectionStats(items, equippedMap = {}) {
     `rarity mix: ${rarityLine}\n` +
     `slot coverage: ${slotLine}\n` +
     `equipped slots filled: ${equippedLine}`;
+}
+
+async function renderInventoryAvatar(uid) {
+  if (!invAvatarStage) return;
+  invAvatarStage.innerHTML = "";
+
+  const equippedSnap = await getDoc(doc(db, "users", uid, "meta", "equipped"));
+  const equipped = equippedSnap.exists() ? equippedSnap.data() : { ...DEFAULT_EQUIPPED };
+
+  const allLayers = (await Promise.all(
+    Object.entries(equipped).map(async ([, itemId]) => {
+      const itemSnap = await getDoc(doc(db, "items", itemId));
+      const item = itemSnap.exists() ? itemSnap.data() : (FALLBACK_ITEMS[itemId] || null);
+      if (!item) return [];
+      const layers = Array.isArray(item.layers) ? item.layers : [{ src: item.src, z: item.z ?? 50 }];
+      return layers;
+    })
+  )).flat().sort((a, b) => a.z - b.z);
+
+  allLayers.forEach(layer => {
+    const img = document.createElement("img");
+    img.className = "layer";
+    img.src = layer.src;
+    img.alt = "";
+    invAvatarStage.appendChild(img);
+  });
 }
 

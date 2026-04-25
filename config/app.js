@@ -5,8 +5,6 @@ export const STARTING_COINS = 1000;
 
 export const DEFAULT_EQUIPPED = {
   baseBody: "etherian_base_1",
-  eyes: "eyes_default",
-  hair: "hair_001",
   top: "top_backwoods",
   bottom: "pants_black_shorts",
   accessory1: "mask_cyber_stratus"

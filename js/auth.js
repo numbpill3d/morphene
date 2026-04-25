@@ -114,9 +114,13 @@ onAuthStateChanged(auth, async (user) => {
     authStatus.textContent = "online";
     authUser.textContent = user.email;
     btnLogout.disabled = false;
-  } else {
-    authStatus.textContent = "offline";
-    authUser.textContent = "none";
-    btnLogout.disabled = true;
+    if (loginSection) loginSection.style.display = "none";
+    if (registerSection) registerSection.style.display = "none";
+    window.location.href = "avatar.html";
+    return;
   }
+
+  authStatus.textContent = "offline";
+  authUser.textContent = "none";
+  btnLogout.disabled = true;
 });
