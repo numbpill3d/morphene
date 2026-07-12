@@ -18,7 +18,7 @@ service cloud.firestore {
       }
     }
 
-    // Items collection - public read access for item definitions
+    // Items collection - public read, write denied (system managed)
     match /items/{itemId} {
       allow read: if true;
       allow write: if false;
